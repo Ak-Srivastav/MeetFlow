@@ -5,6 +5,7 @@ const http = require("http");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const morgan = require('morgan');
+const path = require('path');
 
 const authRoutes = require("./routes/authRoutes");
 const friendInvitationRoutes = require("./routes/friendInvitationRoutes");
@@ -30,10 +31,15 @@ const server = http.createServer(app);
 createSocketServer(server);
 
 const MONGO_URI =
-    process.env.NODE_ENV === "production"
+    process.env.NODE_ENV === "development"
         ? process.env.MONGO_URI
         : process.env.MONGO_URI_DEV;
 
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client", "build", "index.html"));
+});
 
 mongoose
     .connect(MONGO_URI)
