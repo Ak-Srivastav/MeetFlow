@@ -21,7 +21,7 @@ const roomInitializeConnectionHandler = require("../socketControllers/room/roomI
 const createSocketServer = (server) => {
     const io = socket(server, {
         cors: {
-            origin: ["http://localhost:3000", "https://backendwebsite"],
+            origin: ["http://localhost:3000", "https://meetflow.onrender.com/"],
             methods: ["GET", "POST"],
         },
     });
